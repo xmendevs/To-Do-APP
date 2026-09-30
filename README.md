@@ -206,6 +206,15 @@ These are real and currently unaddressed:
 
 ---
 
+## Contributors
+
+| Contributor | Role |
+|---|---|
+| [Success Joseph Ibemgbo](https://github.com/xmendevs) | Author & maintainer |
+
+Built with AI assistance (Claude / opencode) for scaffolding, debugging, and
+feature implementation.
+
 ## License
 
 Private. All rights reserved.
