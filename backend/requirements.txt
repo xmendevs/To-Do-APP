@@ -2,6 +2,14 @@ fastapi>=0.110.0
 uvicorn[standard]>=0.29.0
 sqlalchemy>=2.0.25
 pydantic>=2.6.0
+
+# Required by pydantic's EmailStr. FastAPI imports schemas eagerly, so a
+# missing email-validator crashes the app at startup, not on first request.
+email-validator>=2.0.0
+
+# auth.py imports bcrypt directly. passlib used to pull this in, but passlib
+# was removed (incompatible with bcrypt 5.x) so bcrypt is now a direct dep.
+bcrypt>=4.0.0
+
 python-jose[cryptography]>=3.3.0
-passlib[bcrypt]>=1.7.4
 python-multipart>=0.0.9
