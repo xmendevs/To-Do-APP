@@ -1,24 +1,27 @@
 # Render Blueprint for the Mono API.
 #
-# NOTE: the free tier uses an ephemeral disk, so SQLite data is lost on every
-# redeploy/restart. Add a persistent disk or move to Postgres before real use.
+# Free-tier warning: the disk is ephemeral, so the SQLite file is wiped on every
+# redeploy/restart and all user data is lost. Attach a persistent disk or move to
+# Postgres (set DATABASE_URL) before treating this as real.
 services:
   - type: web
     name: mono-todo-api
     runtime: python
     plan: free
     buildCommand: pip install -r backend/requirements.txt
-    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT --proxy-headers
+    # --app-dir puts backend/ on sys.path so the bare imports in main.py
+    # (from database import ..., from models import ...) resolve. Invoking
+    # `uvicorn backend.main:app` from the repo root does NOT work.
+    startCommand: uvicorn --app-dir backend main:app --host 0.0.0.0 --port $PORT --proxy-headers
     healthCheckPath: /docs
     envVars:
       - key: ENVIRONMENT
         value: production
-      # generateValue creates a strong random secret per deploy
+      # generateValue gives a fresh strong secret per deploy.
       - key: SECRET_KEY
         generateValue: true
-      # Replace with your deployed frontend origin.
       - key: CORS_ORIGINS
-        sync: false
+        value: https://to-do-ap-phi.vercel.app
       - key: LOGIN_RATE_LIMIT
         value: "10"
       - key: LOGIN_RATE_WINDOW

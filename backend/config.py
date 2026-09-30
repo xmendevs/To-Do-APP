@@ -119,7 +119,9 @@ REGISTER_RATE_WINDOW = int(os.getenv("REGISTER_RATE_WINDOW", "3600"))
 
 # ── Misc ─────────────────────────────────────────────────────────────────────
 MIN_PASSWORD_LENGTH = int(os.getenv("MIN_PASSWORD_LENGTH", "8"))
-SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "").strip() or "sqlite:///./todo.db"
+
+# NOTE: DATABASE_URL is resolved in database.py, alongside the engine it feeds.
+# Keeping it there avoids two sources of truth for the same connection string.
 
 
 def describe() -> str:
