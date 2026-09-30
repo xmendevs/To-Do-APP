@@ -8,11 +8,12 @@ services:
     name: mono-todo-api
     runtime: python
     plan: free
-    buildCommand: pip install -r backend/requirements.txt
-    # --app-dir puts backend/ on sys.path so the bare imports in main.py
-    # (from database import ..., from models import ...) resolve. Invoking
-    # `uvicorn backend.main:app` from the repo root does NOT work.
-    startCommand: uvicorn --app-dir backend main:app --host 0.0.0.0 --port $PORT --proxy-headers
+    # Root Directory is backend/, so requirements.txt resolves and the bare
+    # imports in main.py (from database import ..., from models import ...)
+    # work without extra sys.path manipulation.
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT --proxy-headers
     healthCheckPath: /docs
     envVars:
       - key: ENVIRONMENT
