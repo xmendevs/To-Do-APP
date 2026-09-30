@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --sidebar-w: 0px;
+  }
+
+  body {
+    @apply bg-mono-0 text-mono-950 dark:bg-mono-950 dark:text-mono-0 font-sans transition-colors duration-300 antialiased;
+  }
+}
+
+@layer components {
+  /* Shift main content out of the sidebar's way, smoothly. */
+  .sidebar-pad {
+    padding-left: calc(var(--sidebar-w) + 4.5rem);
+    transition: padding-left 0.2s ease;
+  }
+
+  @media (max-width: 768px) {
+    .sidebar-pad {
+      padding-left: 4.5rem;
+    }
+  }
+
+  .btn-primary {
+    @apply bg-mono-950 text-mono-0 px-6 py-2.5 border-2 border-mono-950 font-medium uppercase tracking-wider text-sm transition-all duration-200 hover:bg-mono-0 hover:text-mono-950 dark:bg-mono-0 dark:text-mono-950 dark:border-mono-0 dark:hover:bg-mono-950 dark:hover:text-mono-0;
+  }
+
+  .btn-secondary {
+    @apply bg-transparent text-mono-950 px-6 py-2.5 border-2 border-mono-950 font-medium uppercase tracking-wider text-sm transition-all duration-200 hover:bg-mono-950 hover:text-mono-0 dark:text-mono-0 dark:border-mono-0 dark:hover:bg-mono-0 dark:hover:text-mono-950;
+  }
+
+  .input-field {
+    @apply w-full bg-transparent border-2 border-mono-300 dark:border-mono-700 px-4 py-3.5 text-mono-950 dark:text-mono-0 placeholder-mono-400 focus:outline-none focus:border-mono-950 dark:focus:border-mono-0 transition-colors duration-200;
+  }
+
+  .card {
+    @apply border-2 border-mono-200 dark:border-mono-800 bg-mono-0 dark:bg-mono-950;
+  }
+
+  .glass {
+    @apply bg-white/70 dark:bg-black/70 backdrop-blur-md;
+  }
+
+  .glass-modal {
+    @apply bg-white/80 dark:bg-black/80 backdrop-blur-lg;
+  }
+}
+
+/* Strikethrough animation */
+.task-completed {
+  text-decoration: line-through;
+  text-decoration-color: #555555;
+  text-decoration-thickness: 2px;
+  color: #555555;
+  transition: color 0.3s ease;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #a3a3a3;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #404040;
+}
