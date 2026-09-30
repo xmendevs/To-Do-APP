@@ -17,6 +17,18 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
+  // The API layer fires this when a request comes back 401 with a token
+  // present (expired or revoked). Drop straight back to the landing page
+  // instead of leaving the UI spinning.
+  useEffect(() => {
+    const onUnauthorized = () => {
+      delete api.defaults.headers.common["Authorization"];
+      setUser(null);
+    };
+    window.addEventListener("mono:unauthorized", onUnauthorized);
+    return () => window.removeEventListener("mono:unauthorized", onUnauthorized);
+  }, []);
+
   const fetchUser = async () => {
     try {
       const res = await api.get("/auth/me");

@@ -111,6 +111,15 @@ When `ENVIRONMENT=production`, the app **refuses to start** if `SECRET_KEY` or
 `CORS_ORIGINS` is missing. That is deliberate — a misconfigured deploy fails
 loudly instead of running with a public secret.
 
+### Frontend variables
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `VITE_API_URL` | `/api` | Backend origin, e.g. `https://mono-todo-api.onrender.com`. No trailing slash, no `/api` suffix. Must be set in production — the Vite dev proxy does not exist on Vercel. |
+
+`VITE_*` variables are baked into the bundle at **build** time, so changing one
+requires a redeploy, not just a restart.
+
 ---
 
 ## API
